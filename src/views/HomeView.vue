@@ -1,18 +1,24 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <h1>Home</h1>
+  <p v-for="user in users" :key="user.id">{{user.id}} {{user.username}}</p>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import axios from 'axios'
 
 export default {
-  name: 'HomeView',
-  components: {
-    HelloWorld
+  data(){
+    return{
+      users: []
+    }
+  },
+  methods:{
+    getUsers(){
+      axios.get('user/users').then(res => this.users = res.data)
+    }
+  },
+  created(){
+    this.getUsers();
   }
 }
 </script>
