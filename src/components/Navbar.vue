@@ -16,10 +16,10 @@
                     Register
                 </router-link>
             </div>
-
         </div>
         <div class="navbar-end" v-else>
             <div class="navbar-item">
+                <img class="mr-3" :src="$image('ProfilePicture', store.userId)" :alt="store.username"/>
                 {{store.username}}
             </div>
             <div class="navbar-item" @click="store.logout()">
