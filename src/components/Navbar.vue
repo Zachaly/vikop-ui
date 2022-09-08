@@ -5,18 +5,41 @@
                 Home page
             </router-link>
         </div>
-        <div class="navbar-end">
+        <div class="navbar-end" v-if="!store.authorized">
             <div class="navbar-item">
-                <router-link to="/register" class="button is-success">
+                <router-link to="/login">
+                    Login
+                </router-link>
+            </div>
+            <div class="navbar-item">
+                <router-link to="/register">
                     Register
                 </router-link>
+            </div>
+
+        </div>
+        <div class="navbar-end" v-else>
+            <div class="navbar-item">
+                {{store.username}}
+            </div>
+            <div class="navbar-item" @click="store.logout()">
+                Logout
             </div>
         </div>
     </nav>
 </template>
 
 <script>
+import { useAuthStore } from '@/stores/authStore';
+
 export default {
-    name: 'nav-bar'
+    name: 'nav-bar',
+    setup(){
+        const store = useAuthStore();
+
+        return {
+            store
+        }
+    }
 }
 </script>
