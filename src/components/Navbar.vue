@@ -37,16 +37,14 @@
 </template>
 
 <script>
-import { useAuthStore } from '@/stores/authStore';
-
 export default {
     name: 'nav-bar',
-    setup(){
-        const store = useAuthStore();
-
-        return {
-            store
-        }
-    }
 }
+</script>
+
+<script setup>
+import { useAuthStore } from '@/stores/authStore';
+
+const store = useAuthStore();
+
 </script>

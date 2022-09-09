@@ -22,20 +22,14 @@
     </div>    
 </template>
 
-<script>
+<script setup>
 import { useAuthStore } from '@/stores/authStore';
+import { reactive } from '@vue/reactivity';
 
-export default {
-    setup(){
-        const store = useAuthStore();
+const store = useAuthStore();
+const loginModel = reactive({
+    email: '',
+    password: ''
+})
 
-        return {
-            loginModel: {
-                email: '',
-                password: ''
-            },
-            store
-        }
-    }
-}
 </script>

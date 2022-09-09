@@ -22,7 +22,7 @@
             <div class="field">
                 <label class="label">Confirm Password</label>
                 <div class="control">
-                    <input class="input" type="password" v-model="confirmPassword" placeholder="Confirm Password"/>
+                    <input class="input" type="password" v-model="registerModel.confirmPassword" placeholder="Confirm Password"/>
                 </div>
             </div>
             <div class="field ">
@@ -34,31 +34,32 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import axios from 'axios'
+import { reactive } from '@vue/reactivity';
+import { useRouter } from 'vue-router';
 
-export default {
-    data(){
-        return {
-            registerModel: {
-                username: '',
-                password: '',
-                email: ''
-            },
-            confirmPassword: '',
-        }
-    },
-    methods: {
-        register(){
-            if(this.confirmPassword !== this.registerModel.password)
-                return;
-            
-            axios.post('User/Register/', this.registerModel)
-            .then(() => this.$router.push('/')).
-            catch(error => {
-                console.log(error);
-            })
-        }
+const router = useRouter()
+
+const registerModel = reactive({
+    username: '',
+    password: '',
+    email: '',
+    confirmPassword: ''
+})
+
+function register(){
+    if(registerModel.confirmPassword !== registerModel.password)
+        return;
+
+    const request = {
+        username: registerModel.username,
+        password: registerModel.password,
+        email: registerModel.email
     }
+
+    axios.post('User/Register/', request)
+    .then(() => router.push('/')).
+    catch(error => console.log(error))
 }
 </script>

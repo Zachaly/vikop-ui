@@ -1,20 +1,16 @@
 <template>
-  <Finding class="mt-2" v-for="finding in findings" :key="finding.id" :finding="finding"/>
+  <Finding class="mt-2" v-for="finding in findings.value" :key="finding.id" :finding="finding"/>
 </template>
 
-<script>
-import axios from 'axios'
-import Finding from '@/components/Finding.vue'
+<script setup>
+import Finding from '@/components/Finding.vue';
+import { onMounted, reactive } from '@vue/runtime-core';
+import axios from 'axios';
 
-export default{
-    data() {
-        return {
-            findings: []
-        };
-    },
-    created() {
-        axios.get("finding/getall").then(res => this.findings = res.data);
-    },
-    components: { Finding }
-}
+const findings = reactive([])
+
+onMounted(() => {
+    axios.get('finding/getall').then(res => findings.value = res.data)
+})
+
 </script>

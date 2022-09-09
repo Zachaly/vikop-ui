@@ -23,11 +23,18 @@
 
 <script>
 export default {
-    name: 'finding-part',
-    props:{
-        finding: Object
-    }
+    name: 'finding-part'
 }
+</script>
+
+<script setup>
+import { defineProps } from 'vue';
+
+// eslint-disable-next-line no-unused-vars
+const props = defineProps({
+    finding: Object
+})
+
 </script>
 
 <style scoped>

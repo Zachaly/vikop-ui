@@ -20,33 +20,31 @@
                 </div>
             </div>
             <div class="field">
-                <button class="button is-success" @click="addFinding">Add finding</button>
+                <button class="button is-success" @click="addFinding()">Add finding</button>
             </div>
         </div>
     </div>    
 </template>
 
-<script>
+<script setup>
+import { reactive } from '@vue/reactivity';
 import axios from 'axios';
+import { useRouter } from 'vue-router';
 
-export default {
-    data(){
-        return {
-            findingModel: {
-                title: '',
-                description: '',
-                picture: 'placeholder.jpg',
-                link: '',
-                creatorId: ''
-            }
-        }
-    },
-    methods:{
-        addFinding(){
-            axios.post('finding/add', this.findingModel).
-            then(() => this.$router.push('/')).
-            catch(error => console.log(error))
-        }
-    }
+const router = useRouter()
+
+const findingModel = reactive({
+    title: '',
+    description: '',
+    picture: 'placeholder.jpg',
+    link: '',
+    creatorId: ''
+})
+
+function addFinding(){
+    axios.post('finding/add', findingModel).
+    then(() => router.push('/')).
+    catch(error => console.log(error))
 }
+
 </script>
