@@ -6,17 +6,20 @@
                 <div class="control">
                     <input class="input" v-model="registerModel.username" placeholder="Username"/>
                 </div>
+                <span class="help is-warning" v-for="error in errors.username" :key="error">{{error}}</span>
             </div>
             <div class="field">
                 <label class="label">Email</label>
                 <div class="control">
                     <input class="input" v-model="registerModel.email" placeholder="Email"/>
                 </div>
+                <span class="help is-warning" v-for="error in errors.email" :key="error">{{error}}</span>
             </div>
             <div class="field">
                 <label class="label">Password</label>
                 <div class="control">
                     <input class="input" type="password" v-model="registerModel.password" placeholder="Password"/>
+                    <span class="help is-warning" v-for="error in errors.password" :key="error">{{error}}</span>
                 </div>
             </div>
             <div class="field">
@@ -48,6 +51,12 @@ const registerModel = reactive({
     confirmPassword: ''
 })
 
+const errors = reactive({
+    email: [],
+    password: [],
+    username: []
+})
+
 function register(){
     if(registerModel.confirmPassword !== registerModel.password)
         return;
@@ -60,6 +69,14 @@ function register(){
 
     axios.post('User/Register/', request)
     .then(() => router.push('/')).
-    catch(error => console.log(error))
+    catch(error => {
+        console.log(error)
+
+        const response = error.response.data.errors
+
+        errors.email = response.Email
+        errors.password = response.Password
+        errors.username = response.Username
+    })
 }
 </script>
