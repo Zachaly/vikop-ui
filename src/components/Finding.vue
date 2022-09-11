@@ -8,7 +8,11 @@
                     </figure>
                 </div>
                 <div class="media-content">
-                    <p class="title is-4">{{finding.title}}</p>
+                    <p class="title is-4"> 
+                        <a @click="goToPage" >
+                            {{finding.title}} {{finding.id}}
+                        </a>
+                    </p>
                     <p class="subtitle is-6">@{{finding.creatorName}}</p>
                     <p>
                         {{finding.description}}
@@ -28,12 +32,26 @@ export default {
 </script>
 
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps, reactive } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
 
 // eslint-disable-next-line no-unused-vars
 const props = defineProps({
     finding: Object
 })
+
+const route = reactive({ 
+    name: 'finding',
+    params:{
+        id: props.finding.id
+    }
+})
+
+function goToPage(){
+    router.push(route)
+}
 
 </script>
 

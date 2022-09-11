@@ -20,6 +20,12 @@ const routes = [
     path: '/addfinding',
     name: 'addFinding',
     component: () => import('@/views/AddFindingView.vue')
+  },
+  {
+    path: '/finding/:id',
+    name: 'finding',
+    component: () => import('@/views/FindingView.vue'),
+    props: true
   }
 ]
 
