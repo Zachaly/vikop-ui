@@ -14,12 +14,15 @@ import axios from 'axios';
 import { reactive, ref } from '@vue/reactivity';
 import { onMounted } from '@vue/runtime-core';
 import { useRoute } from 'vue-router';
+import { useAuthStore } from '@/stores/authStore';
 import Finding from '@/components/Finding.vue';
 import Comment from '@/components/Comment.vue';
 import AddComment from '@/components/AddComment.vue';
 
 const loading = ref(true)
 const route = useRoute()
+
+const store = useAuthStore()
 
 const id = route.params.id
 
@@ -40,6 +43,12 @@ onMounted(() => {
     .then(res => {
         finding.value = res.data
         loading.value = false
+    }).then(() => {
+        if(store.authorized){
+            finding.value.comments.forEach(comment => {
+                axios.get('comment/currentuserreaction/' + comment.id).then(res => comment.userReaction = res.data)
+            });
+        }
     })
     .catch(error => console.log(error))
 })

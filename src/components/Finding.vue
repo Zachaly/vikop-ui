@@ -10,7 +10,7 @@
                 <div class="media-content">
                     <p class="title is-4"> 
                         <a @click="goToPage" >
-                            {{finding.title}} {{finding.id}}
+                            {{finding.title}}
                         </a>
                     </p>
                     <p class="subtitle is-6">@{{finding.creatorName}}</p>
@@ -18,6 +18,17 @@
                         {{finding.description}}
                         <br>
                         <a :href="finding.link">Go to</a>
+                    </p>
+                </div>
+                <div class="media-right">
+                    <p class="title has-text-centered">
+                        {{finding.reactions}}
+                    </p>
+                    <p>
+                        <button class="button is-success is-fullwidth" @click="reaction(1)">Dig</button>
+                    </p> 
+                    <p class="mt-1">
+                        <button class="button is-warning is-fullwidth" @click="reaction(-1)">Bury</button>
                     </p>
                 </div>
             </div>
@@ -34,10 +45,13 @@ export default {
 <script setup>
 import { defineProps, reactive } from 'vue';
 import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/stores/authStore';
+import axios from 'axios';
 
 const router = useRouter()
 
-// eslint-disable-next-line no-unused-vars
+const store = useAuthStore()
+
 const props = defineProps({
     finding: Object
 })
@@ -51,6 +65,24 @@ const route = reactive({
 
 function goToPage(){
     router.push(route)
+}
+
+function reaction(reaction){
+    if(!store.authorized){
+        alert('You must be logged in to do this!')
+        return
+    }
+
+    axios.post('/finding/addreaction', { id: props.finding.id, reaction }).then(res => {
+        if(!res.data){
+            if(props.finding.userReaction !== reaction){
+                axios.put('finding/changereaction', { id: props.finding.id, reaction}).catch(error => console.log(error))
+            }
+            else{
+                axios.delete('finding/deleteReaction/' + props.finding.id).catch(error => console.log(error))
+            }
+        }
+    }).catch(error => console.log(error))
 }
 
 </script>
