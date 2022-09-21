@@ -22,6 +22,21 @@
     <div class="content">
       {{comment.content}}
     </div>
+    <button class="button" v-if="!subcomment" @click="getSubcomments">Load subcomments</button>
+  </div>
+  <div class="mb-1 mr-1" v-if="loadSubcomments" >
+    <div class="columns" v-for="subcomment in subcomments" :key="subcomment.id">
+      <div class="column is-1"></div>
+      <div class="column is-11">
+        <Comment :comment="subcomment" :subcomment="true"/>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column is-1"></div>
+      <div class="column is-11">
+        <AddComment class="m-1" @add-comment="addSubcomment"/>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -34,16 +49,33 @@ export default {
 </script>
 
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps, ref } from 'vue';
 import { useAuthStore } from '@/stores/authStore';
 import axios from 'axios';
+import AddComment from './AddComment.vue';
 
 const store = useAuthStore()
 
 // eslint-disable-next-line no-unused-vars
 const props = defineProps({
-    comment: Object
+    comment: Object,
+    subcomment: Boolean
 })
+
+const loadSubcomments = ref(false)
+
+const subcomments = ref([])
+
+function getSubcomments(){
+  if(loadSubcomments.value){
+    loadSubcomments.value = false
+    return
+  }
+  axios.get('comment/subcomments/' + props.comment.id).then(res => {
+    subcomments.value = res.data
+    loadSubcomments.value = true
+  })
+}
 
 function reaction(reaction){
     if(!store.authorized){
@@ -61,6 +93,16 @@ function reaction(reaction){
             }
         }
     }).catch(error => console.log(error))
+}
+
+function addSubcomment(commentModel){
+  const request = {
+    content: commentModel.content,
+    commentId: props.comment.id
+  }
+
+  axios.post('comment/addsubcomment', request)
+  .then(res => subcomments.value.push(res.data))
 }
 </script>
 
