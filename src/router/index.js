@@ -26,6 +26,11 @@ const routes = [
     name: 'finding',
     component: () => import('@/views/FindingView.vue'),
     props: true
+  },
+  {
+    path: '/freespace',
+    name: 'freespace',
+    component: () => import('@/views/FreespaceView.vue')
   }
 ]
 

@@ -2,7 +2,7 @@
     <div v-if="!loading">
         <Finding :finding="finding.value"/>
         <section class="section">
-            <p class="title">Comments</p>
+            <p class="title is-4">Comments ({{finding.value.comments.length}})</p>
             <Comment class="mt-1" v-for="comment in finding.value.comments" :key="comment.id" :comment="comment" :subcomment="false"/>
             <AddComment class="mt-1" @add-comment="addComment"/>
         </section>

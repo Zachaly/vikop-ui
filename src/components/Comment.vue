@@ -8,7 +8,7 @@
         </figure>
       </div>
       <div class="media-content">
-        <p class="subtitle is-6">{{comment.creatorName}}</p>
+        <p class="subtitle is-6">{{comment.creatorName}} <span class="ml-3">{{comment.created}}</span></p>
       </div>
       <div class="media-right">
         <div class="subtitle">

@@ -13,13 +13,18 @@
                             {{finding.title}}
                         </a>
                     </p>
-                    <p class="subtitle is-6">@{{finding.creatorName}}</p>
+                    <p class="subtitle is-6">
+                        <span class="username">@{{finding.creatorName}}</span>
+                        <span class="ml-2">{{finding.created}}</span>
+                    </p>
+                    
                     <p>
                         {{finding.description}}
                         <br>
                         <a :href="finding.link">Go to</a>
                     </p>
                 </div>
+
                 <div class="media-right">
                     <p class="title has-text-centered">
                         {{finding.reactions}}
@@ -29,6 +34,9 @@
                     </p> 
                     <p class="mt-1">
                         <button class="button is-warning is-fullwidth" @click="reaction(-1)">Bury</button>
+                    </p>
+                    <p class="mt-1">
+                        {{finding.commentCount}} comments
                     </p>
                 </div>
             </div>
@@ -88,7 +96,7 @@ function reaction(reaction){
 </script>
 
 <style scoped>
-    .subtitle{
+    .username{
         color: gold;
     }
 </style>
