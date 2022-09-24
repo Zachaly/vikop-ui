@@ -13,12 +13,7 @@
             </div>
         </div>
     </div>
-    <div class="tabs is-centered">
-        <ul>
-            <li :class="{ 'is-active': tab === 0 }"><a @click="changeTab(0)">Findings</a></li>
-            <li :class="{ 'is-active': tab === 1 }"><a @click="changeTab(1)">Posts</a></li>
-        </ul>
-    </div>
+    <Tabs :tabs="['Findings', 'Posts']" @change-tab="changeTab"/>
     <div v-if="tab === 0">
         <Finding class="mt-1" v-for="finding in findings.value" :key="finding.id" :finding="finding"/>
     </div>
@@ -33,6 +28,7 @@ import { onMounted, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import Finding from '../components/Finding.vue';
 import Comment from '@/components/Comment.vue';
+import Tabs from '@/components/Tabs.vue';
 
 const loading = ref(true)
 const route = useRoute()
@@ -47,30 +43,39 @@ const findings = reactive([])
 
 const tab = ref(0)
 
+function getFindings(){
+    loading.value = true
+    axios.get('user/findings/' + id).then(res => {
+        findings.value = res.data
+        loading.value = false
+    })    
+}
+
+function getPosts(){
+    loading.value = true
+    axios.get('user/posts/' + id).then(res => {
+        posts.value = res.data
+        loading.value = false
+    })
+}
+
 function changeTab(number){
     if(number === 0){
-        axios.get('user/findings/' + id).then(res => {
-            findings.value = res.data
-            tab.value = number
-        })
+        getFindings()
     }
     else if(number === 1){
-        axios.get('user/posts/' + id).then(res => {
-            posts.value = res.data
-            tab.value = number
-        })
+        getPosts()
     }
+
+    tab.value = number
 }
 
 onMounted(() => {
+    loading.value = true
     axios.get('user/profile/' + id)
     .then(res => {
         user.value = res.data
-        loading.value = false
-        axios.get('user/findings/' + id).then(res => {
-            findings.value = res.data
-            tab.value = 0
-        })
+        getFindings()
     })
 })
 

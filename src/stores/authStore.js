@@ -12,7 +12,7 @@ export const useAuthStore = defineStore('auth', {
             }).then(() => {
                 axios.get('user/id').
                 then(res => this.userId = res.data).
-                then(() => axios.get('user/getuser/' + this.userId).
+                then(() => axios.get('user/profile/' + this.userId).
                     then(res => this.username = res.data.userName));
             })
         },

@@ -30,7 +30,7 @@
                 <div class="navbar-item">
                     <router-link :to="`/profile/${store.userId}`">
                         <img class="mr-3" :src="$image('ProfilePicture', store.userId)" :alt="store.username"/>
-                        {{store.username}}
+                        <span class="is-vcentered">{{store.username}}</span>
                     </router-link>
                 </div>
                 <div class="navbar-item" @click="store.logout()">

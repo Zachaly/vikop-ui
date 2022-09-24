@@ -30,10 +30,10 @@
                         {{finding.reactions}}
                     </p>
                     <p>
-                        <button class="button is-success is-fullwidth" @click="reaction(1)">Dig</button>
+                        <button class="button is-small is-success is-fullwidth" @click="reaction(1)">Dig</button>
                     </p> 
                     <p class="mt-1">
-                        <button class="button is-warning is-fullwidth" @click="reaction(-1)">Bury</button>
+                        <button class="button is-small is-warning is-fullwidth" @click="reaction(-1)">Bury</button>
                     </p>
                     <p class="mt-1">
                         {{finding.commentCount}} comments
