@@ -1,5 +1,5 @@
 <template v-if="!loading">
-  <Finding  class="mt-2" v-for="finding in findings.value" :key="finding.id" :finding="finding"/>
+  <Finding class="mt-2" v-for="finding in findings.value" :key="finding.id" :finding="finding"/>
 </template>
 
 <script setup>

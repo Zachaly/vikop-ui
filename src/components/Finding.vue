@@ -9,12 +9,12 @@
                 </div>
                 <div class="media-content">
                     <p class="title is-4"> 
-                        <a @click="goToPage" >
+                        <router-link :to="`/finding/${finding.id}`" >
                             {{finding.title}}
-                        </a>
+                        </router-link>
                     </p>
                     <p class="subtitle is-6">
-                        <span class="username">@{{finding.creatorName}}</span>
+                        <router-link :to="`/profile/${finding.creatorId}`" class="username">@{{finding.creatorName}}</router-link>
                         <span class="ml-2">{{finding.created}}</span>
                     </p>
                     
@@ -51,29 +51,15 @@ export default {
 </script>
 
 <script setup>
-import { defineProps, reactive } from 'vue';
-import { useRouter } from 'vue-router';
+import { defineProps,  } from 'vue';
 import { useAuthStore } from '@/stores/authStore';
 import axios from 'axios';
-
-const router = useRouter()
 
 const store = useAuthStore()
 
 const props = defineProps({
     finding: Object
 })
-
-const route = reactive({ 
-    name: 'finding',
-    params:{
-        id: props.finding.id
-    }
-})
-
-function goToPage(){
-    router.push(route)
-}
 
 function reaction(reaction){
     if(!store.authorized){

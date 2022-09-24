@@ -31,6 +31,12 @@ const routes = [
     path: '/freespace',
     name: 'freespace',
     component: () => import('@/views/FreespaceView.vue')
+  },
+  {
+    path: '/profile/:id',
+    name: 'profile',
+    component: () => import('@/views/ProfileView.vue'),
+    props: true
   }
 ]
 

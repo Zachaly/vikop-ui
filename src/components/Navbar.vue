@@ -28,8 +28,10 @@
                     </router-link>
                 </div>
                 <div class="navbar-item">
-                    <img class="mr-3" :src="$image('ProfilePicture', store.userId)" :alt="store.username"/>
-                    {{store.username}}
+                    <router-link :to="`/profile/${store.userId}`">
+                        <img class="mr-3" :src="$image('ProfilePicture', store.userId)" :alt="store.username"/>
+                        {{store.username}}
+                    </router-link>
                 </div>
                 <div class="navbar-item" @click="store.logout()">
                     Logout
