@@ -37,6 +37,11 @@ const routes = [
     name: 'profile',
     component: () => import('@/views/ProfileView.vue'),
     props: true
+  },
+  {
+    path: '/profile/update',
+    name: 'updateprofile',
+    component: () => import('@/views/UpdateProfileView.vue')
   }
 ]
 

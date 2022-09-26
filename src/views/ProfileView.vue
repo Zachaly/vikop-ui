@@ -8,7 +8,13 @@
                     </figure>
                 </div>
                 <div class="media-content">
-                    <p class="title">{{user.userName}}</p>
+                    <p class="title">
+                        {{user.userName}}
+                        <router-link class="button" to="/profile/update" v-if="id === store.userId">
+                            Update
+                        </router-link>
+                    </p>
+                    
                 </div>
             </div>
         </div>
@@ -26,12 +32,14 @@
 import axios from 'axios';
 import { onMounted, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import { useAuthStore } from '@/stores/authStore';
 import Finding from '../components/Finding.vue';
 import Comment from '@/components/Comment.vue';
 import Tabs from '@/components/Tabs.vue';
 
 const loading = ref(true)
 const route = useRoute()
+const store = useAuthStore()
 
 const id = route.params.id
 

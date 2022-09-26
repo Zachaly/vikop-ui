@@ -20,6 +20,12 @@
                 </div>
             </div>
             <div class="field">
+                <label class="label">Image</label>
+                <div class="control">
+                    <input type="file" class="input" @change="fileChange">
+                </div>
+            </div>
+            <div class="field">
                 <button class="button is-success" @click="addFinding()">Add finding</button>
             </div>
         </div>
@@ -36,13 +42,27 @@ const router = useRouter()
 const findingModel = reactive({
     title: '',
     description: '',
-    picture: 'placeholder.jpg',
     link: '',
-    creatorId: ''
+    file: null
 })
 
-function addFinding(){
-    axios.post('finding/add', findingModel).
+function fileChange(event){
+    findingModel.file = event.target.files[0]
+}
+
+function addFinding() {
+    const request = new FormData()
+
+    request.append('title', findingModel.title)
+    request.append('description', findingModel.description)
+    request.append('picture', findingModel.file)
+    request.append('link', findingModel.link)
+
+    axios.post('finding/add', request, {
+        headers: {
+            'Content-type': 'multipart/form-data'
+        }
+    }).
     then(() => router.push('/')).
     catch(error => console.log(error))
 }
