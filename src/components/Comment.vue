@@ -8,7 +8,10 @@
         </figure>
       </div>
       <div class="media-content">
-        <p class="subtitle is-6"><UserName :username="comment.creatorName" :id="comment.creatorId"/> <span class="ml-3">{{comment.created}}</span></p>
+        <p class="subtitle is-6">
+          <UserName :username="comment.creatorName" :id="comment.creatorId" :rank="comment.creatorRank"/> 
+          <span class="ml-3">{{comment.created}}</span>
+        </p>
       </div>
       <div class="media-right">
         <div class="subtitle">

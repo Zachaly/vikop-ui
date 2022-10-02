@@ -9,8 +9,8 @@
                 </div>
                 <div class="media-content">
                     <p class="title">
-                        {{user.userName}}
-                        <span class="subtitle">Joined {{user.created}}</span>
+                        <UserName :username="user.userName" :id="user.id" :rank="user.rank"/>
+                        <span class="subtitle ml-2">Joined {{user.created}}</span>
                         <router-link class="button ml-2" to="/profile/update" v-if="id === store.userId">
                             Update
                         </router-link>
@@ -36,6 +36,7 @@ import { useAuthStore } from '@/stores/authStore';
 import Finding from '../components/Finding.vue';
 import Comment from '@/components/Comment.vue';
 import Tabs from '@/components/Tabs.vue';
+import UserName from '@/components/UserName.vue';
 
 const loading = ref(true)
 const route = useRoute()

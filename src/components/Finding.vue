@@ -14,7 +14,7 @@
                         </router-link>
                     </p>
                     <p class="subtitle is-6">
-                        <UserName :username="finding.creatorName" :id="finding.creatorId"/>
+                        <UserName :username="finding.creatorName" :id="finding.creatorId" :rank="finding.creatorRank"/>
                         <span class="ml-2">{{finding.created}}</span>
                     </p>
                     
