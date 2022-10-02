@@ -17,8 +17,15 @@ const loading = ref(true)
 const posts = ref([])
 
 function addPost(model){
-    axios.post('post/addpost', model)
-        .then(res => posts.value.push(res.data))
+    const request = new FormData()
+    request.append('content', model.content)
+    request.append('picture', request.file)
+
+    axios.post('post/addpost', request, {
+        headers: {
+            'Content-type': 'multipart/form-data'
+        }
+    }).then(res => posts.value.push(res.data))
         .catch(error => console.log(error))
 }
 

@@ -14,7 +14,7 @@
                         </router-link>
                     </p>
                     <p class="subtitle is-6">
-                        <router-link :to="`/profile/${finding.creatorId}`" class="username">@{{finding.creatorName}}</router-link>
+                        <UserName :username="finding.creatorName" :id="finding.creatorId"/>
                         <span class="ml-2">{{finding.created}}</span>
                     </p>
                     
@@ -54,6 +54,7 @@ export default {
 import { defineProps,  } from 'vue';
 import { useAuthStore } from '@/stores/authStore';
 import axios from 'axios';
+import UserName from './UserName.vue';
 
 const store = useAuthStore()
 
@@ -80,9 +81,3 @@ function reaction(reaction){
 }
 
 </script>
-
-<style scoped>
-    .username{
-        color: gold;
-    }
-</style>

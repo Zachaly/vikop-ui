@@ -8,7 +8,7 @@
         </figure>
       </div>
       <div class="media-content">
-        <p class="subtitle is-6">{{comment.creatorName}} <span class="ml-3">{{comment.created}}</span></p>
+        <p class="subtitle is-6"><UserName :username="comment.creatorName" :id="comment.creatorId"/> <span class="ml-3">{{comment.created}}</span></p>
       </div>
       <div class="media-right">
         <div class="subtitle">
@@ -20,7 +20,10 @@
     </div>
 
     <div class="content">
-      {{comment.content}}
+      <p>{{comment.content}}</p>
+      <p v-if="comment.hasPicture">
+        <img  :src="$image('commentpicture', comment.id)"/>
+      </p>
     </div>
     <button class="button" v-if="!subcomment" @click="getSubcomments">Load subcomments</button>
   </div>
@@ -53,6 +56,7 @@ import { defineProps, ref } from 'vue';
 import { useAuthStore } from '@/stores/authStore';
 import axios from 'axios';
 import AddComment from './AddComment.vue';
+import UserName from './UserName.vue';
 
 const store = useAuthStore()
 
@@ -96,10 +100,10 @@ function reaction(reaction){
 }
 
 function addSubcomment(commentModel){
-  const request = {
-    content: commentModel.content,
-    commentId: props.comment.id
-  }
+  const request = new FormData()
+  request.append('content', commentModel.content)
+  request.append('picture', commentModel.file)
+  request.append('commentId', props.comment.id)
 
   axios.post('comment/addsubcomment', request)
   .then(res => subcomments.value.push(res.data))

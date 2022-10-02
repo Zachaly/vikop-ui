@@ -10,11 +10,11 @@
                 <div class="media-content">
                     <p class="title">
                         {{user.userName}}
-                        <router-link class="button" to="/profile/update" v-if="id === store.userId">
+                        <span class="subtitle">Joined {{user.created}}</span>
+                        <router-link class="button ml-2" to="/profile/update" v-if="id === store.userId">
                             Update
                         </router-link>
                     </p>
-                    
                 </div>
             </div>
         </div>

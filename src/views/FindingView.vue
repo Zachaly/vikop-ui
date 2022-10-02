@@ -29,12 +29,16 @@ const id = route.params.id
 const finding = reactive({})
 
 function addComment(commentModel){
-    const request = {
-        findingId: finding.value.id,
-        content: commentModel.content
-    }
-    axios.post('comment/addfindingcomment', request)
-    .then(res => finding.value.comments.push(res.data))
+    const request = new FormData()
+    request.append('content', commentModel.content)
+    request.append('findingId', id)
+    request.append('picture', commentModel.file)
+
+    axios.post('comment/addfindingcomment', request, {
+        headers: {
+            'Content-type': 'multipart/form-data'
+        }
+    }).then(res => finding.value.comments.push(res.data))
 }
 
 onMounted(() => {
