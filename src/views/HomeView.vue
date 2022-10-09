@@ -2,9 +2,8 @@
   <Tabs :tabs="['Hot', 'New']" @change-tab="changeTab"/>
   <div v-if="!loading">
     <Finding class="mt-2" v-for="finding in findings.value" :key="finding.id" :finding="finding"/>
-    <Pages class="mt-2 mb-5" :pageCount="pages" @change-page="changePage"/>
   </div>
-  
+  <Pages class="mt-2 mb-5" :pageCount="pages" @change-page="changePage"/>
 </template>
 
 <script setup>
@@ -30,7 +29,8 @@ function getTopFindings(){
     }).then(() => {
       if(store.authorized){
         findings.value.forEach(finding => {
-          axios.get('finding/currentuserreaction/' + finding.id).then(res => finding.userReaction = res.data)
+          axios.get('finding/currentuserreaction/' + finding.id)
+          .then(res => finding.userReaction = res.data)
         });
       }
     })
@@ -46,7 +46,8 @@ function getNewFindings(){
     }).then(() => {
       if(store.authorized){
         findings.value.forEach(finding => {
-          axios.get('finding/currentuserreaction/' + finding.id).then(res => finding.userReaction = res.data)
+          axios.get('finding/currentuserreaction/' + finding.id)
+          .then(res => finding.userReaction = res.data)
         });
       }
     })

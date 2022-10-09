@@ -30,8 +30,8 @@
     </div>
     <button class="button" v-if="!subcomment" @click="getSubcomments">Load subcomments</button>
   </div>
-  <div class="mb-1 mr-1" v-if="loadSubcomments" >
-    <div class="columns" v-for="subcomment in subcomments" :key="subcomment.id">
+  <div class="mb-1 mr-1 p-5" v-if="loadSubcomments" >
+    <div class="columns mt-1" v-for="subcomment in subcomments" :key="subcomment.id">
       <div class="column is-1"></div>
       <div class="column is-11">
         <Comment :comment="subcomment" :subcomment="true"/>
@@ -116,5 +116,8 @@ function addSubcomment(commentModel){
 <style scoped>
   .button{
     font-family: monospace;
+  }
+  .column{
+    padding: 0;
   }
 </style>

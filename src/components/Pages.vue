@@ -1,10 +1,16 @@
 <template>
-    <nav class="pagination" role="navigation" aria-label="pagination">
+    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+        <a class="pagination-previous" @click="changePage(1)" v-if="currentPage != 1">
+            First
+        </a>
         <a class="pagination-previous" @click="changePage(currentPage - 1)" v-if="currentPage != 1">
             Previous
         </a>
         <a class="pagination-next" @click="changePage(currentPage + 1)" v-if="currentPage != pageCount">
             Next page
+        </a>
+        <a class="pagination-next" @click="changePage(pageCount)" v-if="currentPage != pageCount">
+            Last
         </a>
         <ul class="pagination-list" >
             <li v-for="page in pageCount" :key="page">
@@ -35,6 +41,7 @@ const emit = defineEmits(['change-page'])
 
 function changePage(page){
     currentPage.value = page
+
     emit('change-page', page)
 }
 
