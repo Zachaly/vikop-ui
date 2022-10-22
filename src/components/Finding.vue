@@ -40,6 +40,7 @@
                     </p>
                 </div>
             </div>
+            <TagList v-if="finding.tagList" :tags="finding.tagList"/>
         </div>
     </div>
 </template>
@@ -55,6 +56,7 @@ import { defineProps,  } from 'vue';
 import { useAuthStore } from '@/stores/authStore';
 import axios from 'axios';
 import UserName from './UserName.vue';
+import TagList from './TagList.vue';
 
 const store = useAuthStore()
 

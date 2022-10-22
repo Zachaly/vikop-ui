@@ -26,6 +26,12 @@
                 </div>
             </div>
             <div class="field">
+                <label class="label">Tags</label>
+                <div class="control">
+                    <input v-model="findingModel.tags">
+                </div>
+            </div>
+            <div class="field">
                 <button class="button is-success" @click="addFinding()">Add finding</button>
             </div>
         </div>
@@ -43,7 +49,8 @@ const findingModel = reactive({
     title: '',
     description: '',
     link: '',
-    file: null
+    file: null,
+    tags: ""
 })
 
 function fileChange(event){
@@ -57,6 +64,8 @@ function addFinding() {
     request.append('description', findingModel.description)
     request.append('picture', findingModel.file)
     request.append('link', findingModel.link)
+    request.append('tags', findingModel.tags.split(' '))
+
 
     axios.post('finding/add', request, {
         headers: {

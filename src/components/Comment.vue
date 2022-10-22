@@ -11,6 +11,7 @@
         <p class="subtitle is-6">
           <UserName :username="comment.creatorName" :id="comment.creatorId" :rank="comment.creatorRank"/> 
           <span class="ml-3">{{comment.created}}</span>
+          <span v-for="tag in tags" :key="tag"> #{{tag.name}}</span>
         </p>
       </div>
       <div class="media-right">
@@ -66,7 +67,8 @@ const store = useAuthStore()
 // eslint-disable-next-line no-unused-vars
 const props = defineProps({
     comment: Object,
-    subcomment: Boolean
+    subcomment: Boolean,
+    tags: Array
 })
 
 const loadSubcomments = ref(false)

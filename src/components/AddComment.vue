@@ -2,6 +2,7 @@
     <div v-if="store.authorized">
         <textarea class="input" v-model="commentModel.content"></textarea>
         <input class="input" type="file" @change="fileChange"/>
+        <input class="input" v-model="commentModel.tags"/>
         <button class="button is-success" @click="addComment">Add comment</button>
     </div>
 </template>
@@ -16,7 +17,8 @@ const emit = defineEmits(['add-comment'])
 
 const commentModel = reactive({
     content: '',
-    file: null
+    file: null,
+    tags: ''
 })
 
 function fileChange(e){
@@ -26,6 +28,7 @@ function fileChange(e){
 function addComment(){
     emit('add-comment', commentModel)
     commentModel.content = ''
-    commentModel.file = null
+    commentModel.file = null,
+    commentModel.tags = ''
 }
 </script>

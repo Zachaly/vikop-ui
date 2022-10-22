@@ -2,7 +2,7 @@
     <Tabs :tabs="['Hot', 'New']" @change-tab="changeTab"/>
     <div v-if="!loading">
         <AddComment class="mb-1" @add-comment="addPost"/>
-        <Comment class="mb-1" v-for="post in posts" :key="post.id" :comment="post" />
+        <Comment class="mb-1" v-for="post in posts" :key="post.id" :comment="post.content" :tags="post.tagList" />
     </div>
     <Pages class="mb-5 mt-2" :pageCount="pages" @change-page="changePage"/>
 </template>
@@ -25,6 +25,7 @@ function addPost(model){
     const request = new FormData()
     request.append('content', model.content)
     request.append('picture', request.file)
+    request.append('tags', model.tags)
 
     axios.post('post/addpost', request, {
         headers: {

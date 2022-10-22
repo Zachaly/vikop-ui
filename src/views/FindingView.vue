@@ -1,6 +1,6 @@
 <template>
     <div v-if="!loading">
-        <Finding :finding="finding.value"/>
+        <Finding :finding="finding.value.finding"/>
         <section class="section">
             <p class="title is-4">Comments ({{finding.value.comments.length}})</p>
             <Comment class="mt-1" v-for="comment in finding.value.comments" :key="comment.id" :comment="comment" :subcomment="false"/>
