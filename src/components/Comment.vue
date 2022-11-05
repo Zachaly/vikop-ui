@@ -11,7 +11,7 @@
         <p class="subtitle is-6">
           <UserName :username="comment.creatorName" :id="comment.creatorId" :rank="comment.creatorRank"/> 
           <span class="ml-3">{{comment.created}}</span>
-          <span v-for="tag in tags" :key="tag"> #{{tag.name}}</span>
+          <span class="has-background-grey-light has-text-info-light p-1 ml-1" v-for="tag in tags" :key="tag"> #{{tag.name}}</span>
         </p>
       </div>
       <div class="media-right">
@@ -92,13 +92,15 @@ function reaction(reaction){
         return
     }
 
-    axios.post('/comment/addreaction', { id: props.comment.id, reaction }).then(res => {
-        if(!res.data){
+    axios.post('/reaction/comment', { objectId: props.comment.id, reaction }).then(res => {
+        if(res.data.code === -1){
             if(props.comment.userReaction !== reaction){
-                axios.put('comment/changereaction', { id: props.comment.id, reaction}).catch(error => console.log(error))
+                axios.put('/reaction/comment', { objectId: props.comment.id, reaction }).
+                  then(res => console.log(res.data)).catch(error => console.log(error))
             }
             else{
-                axios.delete('comment/deleteReaction/' + props.comment.id).catch(error => console.log(error))
+                axios.delete('/reaction/comment' , { data:{ objectId: props.comment.id } }).
+                then(res => console.log(res.data)).catch(error => console.log(error))
             }
         }
     }).catch(error => console.log(error))
@@ -111,7 +113,7 @@ function addSubcomment(commentModel){
   request.append('commentId', props.comment.id)
 
   axios.post('comment/addsubcomment', request)
-  .then(res => subcomments.value.push(res.data))
+  .then(res => subcomments.value.push(res.data.data))
 }
 </script>
 

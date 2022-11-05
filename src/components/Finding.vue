@@ -70,13 +70,15 @@ function reaction(reaction){
         return
     }
 
-    axios.post('/finding/addreaction', { id: props.finding.id, reaction }).then(res => {
-        if(!res.data){
+    axios.post('/reaction/finding', { objectId: props.finding.id, reaction }).then(res => {
+        if(res.data.code === -1){
             if(props.finding.userReaction !== reaction){
-                axios.put('finding/changereaction', { id: props.finding.id, reaction}).catch(error => console.log(error))
+                axios.put('reaction/finding', { objectId: props.finding.id, reaction}).
+                    then(res => console.log(res.data)).catch(error => console.log(error))
             }
             else{
-                axios.delete('finding/deleteReaction/' + props.finding.id).catch(error => console.log(error))
+                axios.delete('reaction/finding/', { data: { objectId: props.finding.id} } ).
+                    then(res => console.log(res.data)).catch(error => console.log(error))
             }
         }
     }).catch(error => console.log(error))

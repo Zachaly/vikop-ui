@@ -29,7 +29,7 @@ function getTopFindings(){
     }).then(() => {
       if(store.authorized){
         findings.value.forEach(finding => {
-          axios.get('finding/currentuserreaction/' + finding.id)
+          axios.get('reaction/finding/' + finding.id + '/' + store.userId)
           .then(res => finding.userReaction = res.data)
         });
       }
@@ -46,7 +46,7 @@ function getNewFindings(){
     }).then(() => {
       if(store.authorized){
         findings.value.forEach(finding => {
-          axios.get('finding/currentuserreaction/' + finding.id)
+          axios.get('reaction/finding/' + finding.id + '/' + store.userId)
           .then(res => finding.userReaction = res.data)
         });
       }

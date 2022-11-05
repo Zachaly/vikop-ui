@@ -46,13 +46,16 @@ onMounted(() => {
     axios.get('finding/get/' + id)
     .then(res => {
         finding.value = res.data
-        loading.value = false
+        
     }).then(() => {
         if(store.authorized){
+            axios.get('reaction/finding/' + id + '/' + store.userId)
+            .then(res => finding.value.finding.userReaction = res.data)
             finding.value.comments.forEach(comment => {
-                axios.get('comment/currentuserreaction/' + comment.id).then(res => comment.userReaction = res.data)
+                axios.get('reaction/comment/' + comment.id + '/' + store.userId).then(res => comment.userReaction = res.data)
             });
         }
+        loading.value = false
     })
     .catch(error => console.log(error))
 })

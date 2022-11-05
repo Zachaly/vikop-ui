@@ -24,7 +24,7 @@
         <Finding class="mt-1" v-for="finding in findings.value" :key="finding.id" :finding="finding"/>
     </div>
     <div v-if="tab === 1">
-        <Comment class="mt-1" v-for="post in posts.value" :key="post.id" :comment="post"/>
+        <Comment class="mt-1" v-for="post in posts.value" :key="post.content.id" :comment="post.content" :tags="post.tagList"/>
     </div>
 </template>
 
