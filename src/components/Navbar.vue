@@ -9,6 +9,13 @@
                     Free space
                 </router-link>
             </div>
+            <div class="navbar-start">
+                <div class="navbar-item">
+                    <router-link to="/search">
+                        Search
+                    </router-link>
+                </div>
+            </div>
             <div class="navbar-end" v-if="!store.authorized">
                 <div class="navbar-item">
                     <router-link to="/login">
