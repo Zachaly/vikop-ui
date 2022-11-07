@@ -68,7 +68,7 @@ function register(){
     }
 
     axios.post('User/Register/', request)
-    .then(() => router.push('/')).
+    .then(() => router.push('/login')).
     catch(error => {
         console.log(error)
 

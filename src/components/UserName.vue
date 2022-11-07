@@ -1,9 +1,9 @@
 <template>
-    <router-link :to="`/profile/${id}`" :class="color">@{{username}}</router-link>
+    <router-link :to="`/profile/${id}`" :class="getColor()">@{{username}}</router-link>
 </template>
 
 <script setup>
-import { defineProps, onMounted, ref } from 'vue'
+import { defineProps } from 'vue'
 
 // eslint-disable-next-line no-unused-vars
 const props = defineProps({
@@ -12,17 +12,25 @@ const props = defineProps({
     rank: Number
 })
 
-const color = ref('green');
-
-onMounted(() => {
+function getColor(){
     if(props.rank === 1){
-        color.value = 'orange'
+        return 'orange'
     }
-    else if(props.rank === 2){
-        color.value = 'red'
+    
+    if(props.rank === 2){
+        return 'red'
     }
-})
 
+    if(props.rank === 10){
+        return 'moderator'
+    }
+
+    if(props.rank === 100){
+        return 'admin'
+    }
+
+    return 'green'
+}
 </script>
 
 <style scoped>
@@ -34,5 +42,11 @@ onMounted(() => {
     }
     .red{
         color: red;
+    }
+    .admin{
+        color: aliceblue
+    }
+    .moderator{
+        color: purple
     }
 </style>

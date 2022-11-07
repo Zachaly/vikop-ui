@@ -29,6 +29,11 @@
                 </div>
             </div>
             <div class="navbar-end" v-else>
+                <div v-if="store.claims.includes('Admin')" class="navbar-item">
+                    <router-link to="/admin">
+                        Admin panel
+                    </router-link>
+                </div>
                 <div class="navbar-item">
                     <router-link to="/addfinding">
                         Add finding
@@ -40,7 +45,7 @@
                         <span class="is-vcentered">{{store.username}}</span>
                     </router-link>
                 </div>
-                <div class="navbar-item" @click="store.logout()">
+                <div class="navbar-item" @click="store.logout(); router.push('/login')">
                     Logout
                 </div>
             </div>
@@ -56,7 +61,10 @@ export default {
 
 <script setup>
 import { useAuthStore } from '@/stores/authStore';
+import { useRouter } from 'vue-router';
 
 const store = useAuthStore();
+
+const router = useRouter()
 
 </script>
