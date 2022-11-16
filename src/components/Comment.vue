@@ -30,6 +30,7 @@
       </p>
     </div>
     <button class="button" v-if="!subcomment" @click="getSubcomments">Load subcomments</button>
+    <ReportButton v-if="postId" :objectId="postId" type="post" class="ml-1"/>
   </div>
   <div class="mb-1 mr-1 p-5" v-if="loadSubcomments" >
     <div class="columns mt-1" v-for="subcomment in subcomments" :key="subcomment.id">
@@ -61,6 +62,7 @@ import { useAuthStore } from '@/stores/authStore';
 import axios from 'axios';
 import AddComment from './AddComment.vue';
 import UserName from './UserName.vue';
+import ReportButton from './ReportButton.vue';
 
 const store = useAuthStore()
 
@@ -68,7 +70,8 @@ const store = useAuthStore()
 const props = defineProps({
     comment: Object,
     subcomment: Boolean,
-    tags: Array
+    tags: Array,
+    postId: Number
 })
 
 const loadSubcomments = ref(false)

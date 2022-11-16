@@ -29,7 +29,12 @@
                 </div>
             </div>
             <div class="navbar-end" v-else>
-                <div v-if="store.claims.includes('Admin')" class="navbar-item">
+                <div v-if="store.isModerator || store.isAdmin" class="navbar-item">
+                    <router-link to="/moderation">
+                        Moderation panel
+                    </router-link>
+                </div>
+                <div v-if="store.isAdmin" class="navbar-item">
                     <router-link to="/admin">
                         Admin panel
                     </router-link>

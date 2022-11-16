@@ -18,7 +18,7 @@ const router = useRouter()
 
 const tab = ref(0)
 
-if(!authStore.claims.includes('Admin')){
+if(!authStore.isAdmin){
     router.push('/')
 }
 

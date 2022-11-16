@@ -38,6 +38,9 @@
                     <p class="mt-1">
                         {{finding.commentCount}} comments
                     </p>
+                    <p>
+                        <ReportButton type="Finding" :objectId="finding.id"/>
+                    </p>
                 </div>
             </div>
             <TagList v-if="finding.tagList" :tags="finding.tagList"/>
@@ -57,6 +60,7 @@ import { useAuthStore } from '@/stores/authStore';
 import axios from 'axios';
 import UserName from './UserName.vue';
 import TagList from './TagList.vue';
+import ReportButton from './ReportButton.vue'
 
 const store = useAuthStore()
 

@@ -2,7 +2,7 @@
     <Tabs :tabs="['Hot', 'New']" @change-tab="changeTab"/>
     <div v-if="!loading">
         <AddComment class="mb-1" @add-comment="addPost" :post="true"/>
-        <Comment class="mb-1" v-for="post in posts" :key="post.id" :comment="post.content" :tags="post.tagList" />
+        <Comment class="mb-1" v-for="post in posts" :key="post.id" :postId="post.id" :comment="post.content" :tags="post.tagList" />
     </div>
     <Pages class="mb-5 mt-2" :pageCount="pages" @change-page="changePage"/>
 </template>
