@@ -19,9 +19,12 @@ import { useAuthStore } from '@/stores/authStore';
 const loading = ref(true)
 const posts = ref([])
 const pages = ref(0)
-const currentPage = ref(0)
-const currentTab = ref(0)
 const store = useAuthStore()
+const getRequest = {
+    pageSize: 10,
+    pageIndex: 0,
+    sortingType: 0
+}
 
 function addPost(model){
     const request = new FormData()
@@ -39,24 +42,9 @@ function addPost(model){
         .catch(error => console.log(error))
 }
 
-function getHotPosts(){
+function getPosts(){
     loading.value = true
-    axios.get('post/hot/' + currentPage.value).then(res => {
-        posts.value = res.data
-        loading.value = false
-    }).then(() => {
-        if(store.authorized){
-            posts.value.forEach(post => {
-                axios.get('reaction/comment/' + post.content.id + '/' + store.userId).then(res => post.content.userReaction = res.data)
-            });
-        }
-        loading.value = false
-    })
-}
-
-function getNewPosts(){
-    loading.value = true
-    axios.get('post/new/' + currentPage.value).then(res => {
+    axios.get('post', {params: getRequest }).then(res => {
         posts.value = res.data
         loading.value = false
     }).then(() => {
@@ -70,31 +58,21 @@ function getNewPosts(){
 }
 
 function changeTab(index){
-    currentTab.value = index
+    getRequest.sortingType = index
 
-    if(index === 0){
-        getHotPosts()
-    }
-    else if(index === 1){
-        getNewPosts()
-    }
+    getPosts()
 }
 
 function changePage(page){
-    currentPage.value = page - 1
-    if(currentTab.value === 0){
-        getHotPosts()
-    }
-    else if(currentTab.value === 1){
-        getNewPosts()
-    }
+    getRequest.pageIndex = page - 1
+    getPosts()
 }
 
 onMounted(() => {
-    axios.get('post/pagecount')
+    axios.get('post/pagecount/' + getRequest.pageSize)
     .then(res => pages.value = res.data)
 
-    getHotPosts()
+    getPosts()
 })
 
 </script>

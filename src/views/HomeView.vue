@@ -17,30 +17,16 @@ import Pages from '@/components/Pages.vue'
 const findings = reactive([])
 const loading = ref(true)
 const store = useAuthStore()
-const tab = ref(0)
 const pages = ref(0)
-const currentPage = ref(0)
-
-function getTopFindings(){
-  loading.value = true
-  axios.get('finding/hot/' + currentPage.value)
-    .then(res => {
-      findings.value = res.data
-    }).then(() => {
-      if(store.authorized){
-        findings.value.forEach(finding => {
-          axios.get('reaction/finding/' + finding.id + '/' + store.userId)
-          .then(res => finding.userReaction = res.data)
-        });
-      }
-    })
-    .catch(error => console.log(error))
-    .then(loading.value = false)
+const getRequest = {
+  pageSize: 10,
+  pageIndex: 0,
+  sortingType: 0
 }
 
-function getNewFindings(){
+function getFindings(){
   loading.value = true
-  axios.get('finding/new/' + currentPage.value)
+  axios.get('finding/', { params: getRequest })
     .then(res => {
       findings.value = res.data
     }).then(() => {
@@ -53,36 +39,24 @@ function getNewFindings(){
     })
     .catch(error => console.log(error))
     .then(loading.value = false)
-
 }
 
 function changeTab(number){
-  if(number === 0){
-    getTopFindings(0)
-  }
-  else if (number === 1){
-    getNewFindings(0)
-  }
-
-  tab.value = number
+  getRequest.sortingType = number
+  getFindings()
 }
 
 function changePage(page){
-  currentPage.value = page - 1
+  getRequest.pageIndex = page - 1
 
-  if(tab.value === 0){
-    getTopFindings()
-  }
-  else if(tab.value === 1){
-    getNewFindings()
-  }
+  getFindings()
 }
 
 onMounted(() => {
-  axios.get('finding/pagecount').then(res => {
+  axios.get('finding/count/' + getRequest.pageSize).then(res => {
     pages.value = res.data
   })
-  getTopFindings()
+  getFindings()
 })
 
 </script>
